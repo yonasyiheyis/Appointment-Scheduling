@@ -1,0 +1,74 @@
+package com.example.demo.domain;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
+public class Person {
+
+	@Id
+	@GeneratedValue
+	private int id;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
+
+	@Column(name = "email_address")
+	private String emailAddress;
+
+	@Column(name = "user_name")
+	private String username;
+
+	@Column(name = "password")
+	private String password;
+
+	// @OneToMany(cascade =CascadeType.ALL)
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
+
+	private Set<RoleType> roles = new HashSet();
+	// private Collection<RoleType> role = new ArrayList();
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+	List<Appointment> appointments = new ArrayList();
+
+	// for counselor only
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "counselor")
+	List<TMSession> tmSessions = new ArrayList();
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+	List<AppointmentRequest> appointmentRequests = new ArrayList();
+
+}

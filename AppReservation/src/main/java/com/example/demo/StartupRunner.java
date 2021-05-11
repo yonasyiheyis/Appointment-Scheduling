@@ -38,23 +38,24 @@ public class StartupRunner implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		Person per = new Person();
+		
 		per.setFirstName("abc");
 		per.setLastName("xyz");
 		per.setEmailAddress("abc");
 		per.setUsername("test");
 		per.setPassword("123");
+		
 		Set<RoleType> roles = new HashSet();
 		roles.add(RoleType.Admin);
 		roles.add(RoleType.Customer);
 		per.setRoles(roles);
 
 		TMSession ses = new TMSession();
-		ses.setAddress(new Address("abc", "abc", "abc", 1));
 		ses.setSessionDate(LocalDate.now());
 		ses.setStartTime(LocalTime.now());
 		ses.setDuration(30);
-		ses.setCounselor(per);
-
+		ses.setCounselor(per);		
+		ses.setAddress(new Address("abc","abc","abc",1));
 		Appointment appoint = new Appointment();
 		appoint.setPerson(per);
 		appoint.setTmSession(ses);

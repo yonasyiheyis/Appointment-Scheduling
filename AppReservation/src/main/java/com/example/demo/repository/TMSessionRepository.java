@@ -10,6 +10,6 @@ import com.example.demo.domain.TMSession;
 @Repository
 @Transactional
 
-public interface TMSessionRepository extends JpaRepository<TMSession, String> {
-
+public interface TMSessionRepository extends JpaRepository<TMSession, Integer> {
+	
 }

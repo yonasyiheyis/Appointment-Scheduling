@@ -1,7 +1,6 @@
 package com.example.demo.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,8 +13,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,7 +37,7 @@ import lombok.ToString;
 public class Person {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "first_name")
@@ -58,17 +60,20 @@ public class Person {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 
-	private Set<RoleType> roles = new HashSet();
+	private Set<RoleType> roles = new HashSet<>();
 	// private Collection<RoleType> role = new ArrayList();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-	List<Appointment> appointments = new ArrayList();
+	@JsonIgnore
+	List<Appointment> appointments = new ArrayList<>();
 
 	// for counselor only
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "counselor")
-	List<TMSession> tmSessions = new ArrayList();
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "counselor")
+	@JsonIgnore
+	List<TMSession> tmSessions = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-	List<AppointmentRequest> appointmentRequests = new ArrayList();
+	@JsonIgnore
+	List<AppointmentRequest> appointmentRequests = new ArrayList<>();
 
 }

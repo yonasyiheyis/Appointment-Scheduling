@@ -27,4 +27,5 @@ public class Address {
 
 	private int zipCode;
 
+	
 }

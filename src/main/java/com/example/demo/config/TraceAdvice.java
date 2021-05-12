@@ -14,6 +14,7 @@ public class TraceAdvice {
 	@Before("execution(*  com.example.demo.service.AppointmentService.*(..)) && args(personId, sessionId)")
 	public void tracebeforemethod(JoinPoint joinpoint, Integer personId, Integer sessionId) {
 		System.out.print("before execution of method " + joinpoint.getSignature());
+		System.out.print("before execution of method " + joinpoint.getSignature());
 		
 	}
 
